@@ -212,7 +212,7 @@
                         </outputApk>
                     </zipalign>
                     <sdk>
-                        <platform>16</platform>
+                        <platform>23</platform>
                     </sdk>
                     <dex>
                         <coreLibrary>true</coreLibrary>
