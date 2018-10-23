@@ -311,10 +311,31 @@ public class ProxyDroidService extends Service {
         dnsThread.setDaemon(true);
         dnsThread.start();
 
-        if (hasRedirectSupport)
+        if (hasRedirectSupport) {
+          
+          cmd.append("iptables -A INPUT -p udp --sport 53 -j ACCEPT\n");
+          cmd.append("iptables -A INPUT -p udp --dport 53 -j ACCEPT\n");
+          cmd.append("iptables -A OUTPUT -p udp --sport 53 -j ACCEPT\n");
+          cmd.append("iptables -A OUTPUT -p udp --dport 53 -j ACCEPT\n");
+          cmd.append("iptables -A INPUT -p udp -j DROP\n");
+          cmd.append("iptables -A OUTPUT -p udp -j DROP\n");
+
+
           cmd.append("iptables -t nat -A OUTPUT -p udp --dport 53 -j REDIRECT --to ").append(dnsPort).append("\n");
-        else
+
+        } else {
+
+          cmd.append("iptables -A INPUT -p udp --sport 53 -j ACCEPT\n");
+          cmd.append("iptables -A INPUT -p udp --dport 53 -j ACCEPT\n");
+          cmd.append("iptables -A OUTPUT -p udp --sport 53 -j ACCEPT\n");
+          cmd.append("iptables -A OUTPUT -p udp --dport 53 -j ACCEPT\n");
+          cmd.append("iptables -A INPUT -p udp -j DROP\n");
+          cmd.append("iptables -A OUTPUT -p udp -j DROP\n");
+
           cmd.append("iptables -t nat -A OUTPUT -p udp --dport 53 -j DNAT --to-destination 127.0.0.1:").append(dnsPort).append("\n");
+
+
+        }
 
       }
 
