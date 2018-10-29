@@ -337,6 +337,8 @@ public class ProxyDroidService extends Service {
         dnatCmd = CMD_IPTABLES_DNAT_ADD_HTTP_TUNNEL;
       }
 
+      cmd.append("iptables -t nat -m owner --uid-owner 0 -A OUTPUT -j RETURN\n");
+
       if (isBypassApps) {
         // for host specified apps
         if (apps == null || apps.length <= 0)
@@ -365,9 +367,8 @@ public class ProxyDroidService extends Service {
           }
         }
       }
-
-      String rules = cmd.toString();
-
+      String rules = cmd.toString(); Log.d("ProxyDroid", rules);
+      
       rules = rules.replace("iptables", Utils.getIptables());
 
       Utils.runRootCommand(rules);
