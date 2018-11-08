@@ -524,7 +524,7 @@ public class ProxyDroidService extends Service {
   }
 
   private void onDisconnect() {
-
+  	/*
     final StringBuilder sb = new StringBuilder();
 
     sb.append(Utils.getIptables()).append(" -t nat -F OUTPUT\n");
@@ -545,7 +545,7 @@ public class ProxyDroidService extends Service {
         Utils.runRootCommand(sb.toString());
       }
     }.start();
-
+    */
   }
 
   final Handler handler = new Handler() {
